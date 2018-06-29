@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(name='ie_mbdbl2017_C_yahoo_ks_datareader',
-      version='0.1',  # Development release
-      description='Python Packaging Starting Kit - Simple Structure to creater your own package - for training purposes!',
-      url='https://github.com/manoelgadi/pythonpackagesample',
-      author='Prof. Manoel Gadi',
-      author_email='mfalonso@faculty.ie.edu',
+      version='0.2',  # Development release
+      description='Python Packaging for Risk and Fraud Course, GMBD2017, GroupC',
+      url='https://github.com/dancual/pythonpackagesample',
+      author='Daniel Serrano',
+      author_email='dserrano1983@gmail.com',
       license='MIT',
           packages=['ie_mbdbl2017_C_yahoo_ks_datareader'],
       zip_safe=False)
