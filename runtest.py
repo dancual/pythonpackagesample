@@ -1,5 +1,5 @@
-from ie_mbdbl2017_C_yahoo_ks_datareader import datareader_doc
+from ie_mbdbl2017_C_yahoo_ks_datareader import KsDataReader
 
-print(help(datareader_doc))
+df = KsDataReader()
 
-print(datareader_doc())
+print(df)
