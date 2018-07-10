@@ -118,8 +118,8 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
             else:
                 print("")
                 print("Data succesfully exported into a DataFrame")
-                plt_name = "GroupD_R&Fplot.pdf"
-                mail_subject = "Risk and Fraud - Group D Image"
+                plt_name = "GroupC_R&Fplot.pdf"
+                mail_subject = "Risk and Fraud - Group C Image"
                 mail_text = "Results of your query"
                 fig = result.plot(x = "timestamp", y = "Market Cap", linestyle="-", color="blue").get_figure()
                 fig.savefig(plt_name)
@@ -129,5 +129,3 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
             return 0
     else:
         return 0
-    
-#KsDataReader(tic_in="AEROMEX.MX",start_in="20180401",end_in="20180629")

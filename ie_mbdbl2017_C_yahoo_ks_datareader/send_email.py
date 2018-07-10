@@ -1,6 +1,6 @@
  
 
-def send_email(subject, msg, send_plt):
+def send_email(subject, cuerpo, send_plt):
     
     #Functions for email
     import smtplib
@@ -8,7 +8,8 @@ def send_email(subject, msg, send_plt):
     from email.mime.text import MIMEText
     from email.mime.base import MIMEBase
     from email import encoders
-    import config
+    #import config
+    from ie_mbdbl2017_C_yahoo_ks_datareader.config import config
     
     try:
         fromaddr = config.EMAIL_ADDRESS
@@ -17,10 +18,10 @@ def send_email(subject, msg, send_plt):
         msg = MIMEMultipart()
          
         msg['From'] = fromaddr
-        msg['To'] = toaddr
+        msg['To'] = ", ".join(toaddr)
         msg['Subject'] = subject
          
-        body =  msg
+        body =  cuerpo
          
         msg.attach(MIMEText(body, 'plain'))
          
