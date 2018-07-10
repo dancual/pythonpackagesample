@@ -12,6 +12,7 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
         GMDB-2017; Group C
     '''
     #Import functions
+    import matplotlib
     import pandas as pd
     import requests
     from ie_mbdbl2017_C_yahoo_ks_datareader.check_tickers import check_tickers, df_tickers
@@ -118,12 +119,16 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
             else:
                 print("")
                 print("Data succesfully exported into a DataFrame")
-                plt_name = "GroupC_R&Fplot.pdf"
-                mail_subject = "Risk and Fraud - Group C Image"
-                mail_text = "Results of your query"
-                fig = result.plot(x = "timestamp", y = "Market Cap", linestyle="-", color="blue").get_figure()
-                fig.savefig(plt_name)
-                send_email(mail_subject, mail_text, plt_name)
+                try:
+                    plt_name = "GroupC_R&Fplot.pdf"
+                    mail_subject = "Risk and Fraud - Group C Image"
+                    mail_text = "Results of your query"
+                    fig = result.plot(x = "timestamp", y = "Market Cap", linestyle="-", color="blue").get_figure()
+                    fig.savefig(plt_name)
+                    send_email(mail_subject, mail_text, plt_name)
+                except:
+                    print("")
+                    print("Could not create the graph, only the DF is avaiable")                   
                 return result
         else:
             return 0

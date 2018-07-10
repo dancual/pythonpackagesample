@@ -9,7 +9,7 @@ def send_email(subject, cuerpo, send_plt):
     from email.mime.base import MIMEBase
     from email import encoders
     #import config
-    from ie_mbdbl2017_C_yahoo_ks_datareader.config import config
+    from ie_mbdbl2017_C_yahoo_ks_datareader import config
     
     try:
         fromaddr = config.EMAIL_ADDRESS
