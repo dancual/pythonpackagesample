@@ -1,3 +1,4 @@
+
 def KsDataReader(tic_in="",start_in="",end_in=""):
     ''' Takes three parameters (optinal) and displays the results of a query based on them over Group's C Yahoo finance DB 
         The function can be called wihtout paremeters and will interact with the user in order to read the required data, or
@@ -10,7 +11,6 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
         By: Vivianne Mahecha, Alvaro Fernández, Daniel Serrano, Marcos Ramírez, Markus Schaber and Yamil Zeledon
         GMDB-2017; Group C
     '''
-    
     #Import functions
     import pandas as pd
     import requests
@@ -18,11 +18,13 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
     from ie_mbdbl2017_C_yahoo_ks_datareader.check_dates import check_dates, check_dates_correct
     #from check_tickers import check_tickers, df_tickers
     #from check_dates import check_dates, check_dates_correct
+    #from send_email import send_email
+    from ie_mbdbl2017_C_yahoo_ks_datareader.send_email import send_email
     
     #Obtain tickers:
     av_tickers = df_tickers()
-    
     query = []
+    
     #Check if arguemnts where provided
     #Ticker
     if tic_in == "":
@@ -116,8 +118,16 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
             else:
                 print("")
                 print("Data succesfully exported into a DataFrame")
+                plt_name = "GroupD_R&Fplot.pdf"
+                mail_subject = "Risk and Fraud - Group D Image"
+                mail_text = "Results of your query"
+                fig = result.plot(x = "timestamp", y = "Market Cap", linestyle="-", color="blue").get_figure()
+                fig.savefig(plt_name)
+                send_email(mail_subject, mail_text, plt_name)
                 return result
         else:
             return 0
     else:
         return 0
+    
+#KsDataReader(tic_in="AEROMEX.MX",start_in="20180401",end_in="20180629")
