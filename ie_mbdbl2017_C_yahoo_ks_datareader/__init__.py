@@ -1,12 +1,13 @@
 
 def KsDataReader(tic_in="",start_in="",end_in=""):
-    ''' Takes three parameters (optinal) and displays the results of a query based on them over Group's C Yahoo finance DB 
+    ''' Takes three (optional) parameters and displays the results of a query based on them over Group's C Yahoo finance DB 
         The function can be called wihtout paremeters and will interact with the user in order to read the required data, or
         cab be called using the following parameters.
         Parameters:
             tic_in (optional): Name of the ticker which data wants to be extracted
             start_in (optional): Initial date from when the data extraction will take place
             end_in (optional): Initial date from when the data extraction will take place
+        The results of the query will be graphed and sent to an email distribution list.
             
         By: Vivianne Mahecha, Alvaro Fernández, Daniel Serrano, Marcos Ramírez, Markus Schaber and Yamil Zeledon
         GMDB-2017; Group C
@@ -108,6 +109,7 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
             response = response.json()
             df = pd.DataFrame(response)
             result = df.sort_values(['timestamp'], ascending=[1])
+            result["TimeStampNoTime"] = [x[0:10] for x in result["timestamp"]]
             
             #Imprimir resultados
             if result.empty == True:
@@ -119,16 +121,28 @@ def KsDataReader(tic_in="",start_in="",end_in=""):
             else:
                 print("")
                 print("Data succesfully exported into a DataFrame")
+                print("Plotting results")
+                print(".........")
+                #Create Graph
                 try:
-                    plt_name = "GroupC_R&Fplot.pdf"
-                    mail_subject = "Risk and Fraud - Group C Image"
-                    mail_text = "Results of your query"
-                    fig = result.plot(x = "timestamp", y = "Market Cap", linestyle="-", color="blue").get_figure()
-                    fig.savefig(plt_name)
-                    send_email(mail_subject, mail_text, plt_name)
+                    if(len(result) == 1):
+                        print("Could not create a graph, not enough data points")
+                    else:
+                        plt_name = "GroupC_R&Fplot.pdf"
+                        mail_subject = "Risk and Fraud - Group C Image"
+                        mail_text = "Results of your query"
+                        fig = result.plot(x = "TimeStampNoTime", y = "Market Cap", linestyle="-", color="blue",
+                                          title=tic, rot=90, legend=False)
+                        fig.set_xlabel("Date")
+                        fig.set_ylabel("Market Cap (MUSD)")
+                        fig = fig.get_figure()
+                        fig.savefig(plt_name,bbox_inches="tight")
+                        send_email(mail_subject, mail_text, plt_name)
+                        print("An email has been sent with the results plotted")
                 except:
                     print("")
-                    print("Could not create the graph, only the DF is avaiable")                   
+                    print("Could not create a graph, only the DF is avaiable")                   
+                result = result.drop(["TimeStampNoTime"], axis=1)
                 return result
         else:
             return 0

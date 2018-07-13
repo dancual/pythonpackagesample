@@ -1,4 +1,3 @@
- 
 
 def send_email(subject, cuerpo, send_plt):
     
